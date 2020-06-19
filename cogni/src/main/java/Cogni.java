@@ -163,12 +163,10 @@ public class Cogni {
      * @throws TransformerException
      * @throws MessagingException
      */
-    public void createXMLandEmail(Emailer emailer) throws UnirestException, InterruptedException, ParserConfigurationException,
+    public void createXMLandEmail(Emailer emailer, String recipient) throws UnirestException, InterruptedException, ParserConfigurationException,
             IOException, SAXException, TransformerException, MessagingException {
         JSONObject[] arrOfJson = getMaxDeaths();
         String[] xmlStr = new String[arrOfJson.length];
-
-
 
         for(int i = 0; i < arrOfJson.length; i++){
             xmlStr[i] = "<?xml version=\"1.0\" encoding=\"ISO-8859-15\"?>\n<" + "root>" + XML.toString(arrOfJson[i]) + "</root>";
@@ -176,7 +174,7 @@ public class Cogni {
 
         for(int i = 0; i < arrOfJson.length ; i++){
             stringToXmlFile(xmlStr[i], arrOfJson[i].getString("code"));
-            emailer.sendEmail("dvalantiejus1231@gmail.com", "ka", getHTMLtext(xmlStr[i]), arrOfJson[i].getString("code") + ".xml");
+            emailer.sendEmail(recipient, "XML files", getHTMLtext(xmlStr[i]), arrOfJson[i].getString("code") + ".xml");
         }
 
     }
@@ -242,7 +240,7 @@ public class Cogni {
 
         // Task 6: Convert it to XML. Email in html email body and xml-generated file attached.
         //**Uncomment**//
-        //c.createXMLandEmail(emailer);
+        //c.createXMLandEmail(emailer, "receiversEmail@gmail.com");
 
 
     }
